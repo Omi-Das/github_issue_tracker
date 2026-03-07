@@ -18,7 +18,7 @@ loginBtn.addEventListener("click", function(event) {
     if (userName === validUserName && pin === validPin) {
         alert("Login successful!");
         // Home page-e niye jaoa hosche
-        window.location.href = "home.html"; 
+        window.location.href = "main.html"; 
     } else {
         alert("Vul Number athoba Pin diyechen. Abar chesta korun!");
     }
