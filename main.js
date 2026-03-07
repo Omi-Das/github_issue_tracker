@@ -1,138 +1,117 @@
 console.log("Omi");
 
-// const loadingSpinner = document.getElementById('loadingSpinner');
+let allIssuesData = []; // API theke asha shob data ekhane save thakbe
 
-// // frameContainer add korchi
-// function showLoading(){
-//     loadingSpinner.classList.remove("hidden");
-//     frameContainer.innerHTML = "";
-// }
-// function hideLoading(){
-//     loadingSpinner.classList.add("hidden");
-// }
+// 1. Loading Spinner handle korar logic
+const loadingSpinner = document.getElementById('loadingSpinner');
 
-// function toggleTab(clickedBtn) {
-//     // 1. Shob gula button ke 'tab-btn' class diye khuje ber kora hocche
-//     const allButtons = document.querySelectorAll('.tab-btn');
+function showLoading() {
+    loadingSpinner.classList.remove("hidden");
+    document.getElementById('issues-container').innerHTML = ""; 
+}
+
+function hideLoading() {
+    loadingSpinner.classList.add("hidden");
+}
+
+// 2. Specific ID diye Modal dekhano (API Path thik kora hoyeche)
+const showIssueDetails = async (id) => {
+    const modal = document.getElementById('issue_details_modal');
+    const modalContent = document.getElementById('modal-content');
     
-//     // 2. Proti ta button er upor loop chaliye ager active style gula muche fela hocche
-//     allButtons.forEach(btn => {
-//         // Active thakle Blue background r White text shoriye fela hocche
-//         btn.classList.remove('bg-[#4a00ff]', 'text-white');
-        
-//         // Default Gray color add kora hocche
-//         btn.classList.add('text-gray-500');
-//     });
+    modal.showModal();
+    modalContent.innerHTML = `<div class="flex justify-center py-10"><span class="loading loading-spinner loading-lg text-[#4a00ff]"></span></div>`;
 
-//     // 3. Ekhon je button e click kora hoyeche, shetate Blue background r White text dewa hocche
-//     clickedBtn.classList.add('bg-[#4a00ff]', 'text-white');
-    
-//     // Active button theke Gray color ta shoriye dewa hocche
-//     clickedBtn.classList.remove('text-gray-500');
-// }
-
-// const loadIssues = async () => {
-//     const res = await fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues');
-//     const result = await res.json();
-    
-//     // API output check korle dekha jay real data 'result.data' er bhetor thake
-//     const issues = result.data; 
-
-//     // Dynamic count set kora
-//     document.getElementById('total-issues').innerText = `${issues.length} Issues`;
-
-//     const container = document.getElementById('issues-container');
-//     container.innerHTML = ''; 
-
-//     issues.forEach(issue => {
-//         // Border color logic: status 'open' hole green, otherwise purple
-//         const borderColor = issue.status === 'open' ? 'border-t-[#00C292]' : 'border-t-[#A855F7]';
-
-//         const card = document.createElement('div');
-//         card.className = `bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-t-4 ${borderColor} transition-all hover:shadow-md`;
-        
-//         card.innerHTML = `
-//             <div class="flex justify-between items-start">
-//                 <!-- Icon onujayi priority color change -->
-//                 <span class="p-2 bg-gray-50 rounded-lg">
-//                     <i class="fa-regular fa-circle-dot ${issue.status === 'open' ? 'text-green-500' : 'text-purple-500'}"></i>
-//                 </span>
-//                 <span class="text-[11px] font-bold px-3 py-1 rounded-full ${issue.priority === 'HIGH' ? 'bg-red-50 text-red-500' : (issue.priority === 'MEDIUM' ? 'bg-yellow-50 text-yellow-600' : 'bg-blue-50 text-blue-500')}">
-//                     ${issue.priority}
-//                 </span>
-//             </div>
-
-//             <h3 class="font-bold text-gray-800 mt-4 text-lg leading-tight">${issue.title}</h3>
-//             <p class="text-sm text-gray-500 mt-2 line-clamp-2">${issue.description}</p>
-            
-//             <div class="flex flex-wrap gap-2 mt-4">
-//                 <span class="text-[10px] font-bold bg-[#fecaca] text-pink-500 px-2 py-1 rounded-full"># BUG</span>
-//                 <span class="text-[10px] font-bold bg-[#fde68a] text-orange-600 px-2 py-1 rounded-full"># HELP WANTED</span>
-//             </div>
-
-//             <div class="mt-6 pt-4 border-t border-gray-50 flex flex-col gap-1">
-//                 <p class="text-xs text-gray-400 font-medium">#${issue.issue_id} by <span class="text-gray-600">${issue.author}</span></p>
-//                 <p class="text-xs text-gray-400">${issue.date}</p>
-//             </div>
-//         `;
-//         container.appendChild(card);
-//     });
-   
-// };
-
-// loadIssues();
-
-
-let allIssuesData = []; // API theke asha shob data ekhane thakbe
-
-const loadIssues = async () => {
-    const res = await fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues');
+    // fetch URL-e add kora hoyeche
+    const res = await fetch(`https://phi-lab-server.vercel.app{id}`);
     const result = await res.json();
-    
-    allIssuesData = result.data; // Shob issues variable-e save kora holo
-    displayIssues(allIssuesData); // Initial-e shob (All) dekhano holo
+    const issue = result.data;
+
+    modalContent.innerHTML = `
+        <h2 class="text-3xl font-extrabold text-gray-800 mb-2">${issue.title}</h2>
+        <div class="flex items-center gap-3 text-sm text-gray-400 mb-6">
+            <span class="px-3 py-1 rounded-full text-white font-bold ${issue.status === 'open' ? 'bg-[#00C292]' : 'bg-purple-500'}">
+                ${issue.status === 'open' ? 'Opened' : 'Closed'}
+            </span>
+            <span>• Opened by <span class="text-gray-600 font-bold">${issue.author}</span> • ${issue.date}</span>
+        </div>
+        <p class="text-gray-500 leading-relaxed text-lg mb-10">${issue.description}</p>
+        <div class="grid grid-cols-2 gap-10 border-t border-gray-100 pt-8">
+            <div>
+                <p class="text-gray-400 text-xs mb-1 uppercase font-bold tracking-widest">Assignee:</p>
+                <p class="text-xl font-black text-gray-800">${issue.author}</p>
+            </div>
+            <div>
+                <p class="text-gray-400 text-xs mb-1 uppercase font-bold tracking-widest">Priority:</p>
+                <span class="px-6 py-1 rounded-full text-white text-[10px] font-black bg-red-500 uppercase">${issue.priority}</span>
+            </div>
+        </div>
+    `;
 };
 
-// Cards bananor common function
-const displayIssues = (issues) => {
-    // Heading-er count dynamic kora
-    document.getElementById('total-issues').innerText = `${issues.length} Issues`;
+// 3. API theke main list load kora
+const loadIssues = async () => {
+    showLoading();
+    const res = await fetch('https://phi-lab-server.vercel.app/api/v1/lab/issues');
+    const result = await res.json();
+    allIssuesData = result.data; 
 
+    // Header count update
+    const openCount = allIssuesData.filter(i => i.status === 'open').length;
+    const closedCount = allIssuesData.filter(i => i.status === 'closed').length;
+    document.getElementById('open-count').innerText = `${openCount} Open`;
+    document.getElementById('closed-count').innerText = `${closedCount} Closed`;
+
+    displayIssues(allIssuesData); 
+    hideLoading();
+};
+
+// 4. Cards render function (Updated with Image Design)
+const displayIssues = (issues) => {
+    document.getElementById('total-issues').innerText = `${issues.length} Issues`;
     const container = document.getElementById('issues-container');
     container.innerHTML = ''; 
 
     issues.forEach(issue => {
         const borderColor = issue.status === 'open' ? 'border-t-[#00C292]' : 'border-t-[#A855F7]';
         const card = document.createElement('div');
-        card.className = `bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-t-4 ${borderColor} transition-all hover:shadow-md`;
+        card.setAttribute('onclick', `showIssueDetails('${issue.issue_id}')`);
+        card.className = `cursor-pointer bg-white p-6 rounded-xl shadow-sm border border-gray-100 border-t-4 ${borderColor} transition-all hover:shadow-xl hover:-translate-y-1`;
         
         card.innerHTML = `
-            <div class="flex justify-between items-start">
-                <span class="p-2 bg-gray-50 rounded-lg">
-                    <i class="fa-regular fa-circle-dot ${issue.status === 'open' ? 'text-green-500' : 'text-purple-500'}"></i>
+            <div class="flex justify-between items-center mb-4">
+                <span class="w-6 h-6 rounded-full flex items-center justify-center ${issue.status === 'open' ? 'bg-green-50 text-green-500' : 'bg-purple-50 text-purple-500'}">
+                    <svg xmlns="http://www.w3.org" width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><circle cx="12" cy="12" r="1"></circle></svg>
                 </span>
-                <span class="text-[11px] font-bold px-3 py-1 rounded-full ${issue.priority === 'HIGH' ? 'bg-red-50 text-red-500' : (issue.priority === 'MEDIUM' ? 'bg-yellow-50 text-yellow-600' : 'bg-blue-50 text-blue-500')}">
+                <span class="text-[10px] font-bold px-4 py-1 rounded-full ${issue.priority === 'HIGH' ? 'bg-red-50 text-red-400' : 'bg-blue-50 text-blue-400'} uppercase">
                     ${issue.priority}
                 </span>
             </div>
-            <h3 class="font-bold text-gray-800 mt-4 text-lg leading-tight">${issue.title}</h3>
-            <p class="text-sm text-gray-500 mt-2 line-clamp-2">${issue.description}</p>
-            <div class="flex flex-wrap gap-2 mt-4">
-                <span class="text-[10px] font-bold bg-[#fecaca] text-pink-500 px-2 py-1 rounded-full"># BUG</span>
-                <span class="text-[10px] font-bold bg-[#fde68a] text-orange-600 px-2 py-1 rounded-full"># HELP WANTED</span>
+
+            <h3 class="font-bold text-gray-800 text-lg leading-tight mb-2">${issue.title}</h3>
+            <p class="text-sm text-gray-400 leading-relaxed mb-4 line-clamp-2">${issue.description}</p>
+
+            <!-- Tags added as per image -->
+            <div class="flex gap-2 mb-6">
+                <span class="flex items-center gap-1 px-3 py-1 rounded-full bg-red-50 text-red-400 text-[10px] font-bold border border-red-100">
+                    <svg xmlns="http://www.w3.org" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg> BUG
+                </span>
+                <span class="flex items-center gap-1 px-3 py-1 rounded-full bg-orange-50 text-orange-400 text-[10px] font-bold border border-orange-100">
+                    <svg xmlns="http://www.w3.org" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg> HELP WANTED
+                </span>
             </div>
-            <div class="mt-6 pt-4 border-t border-gray-50 flex flex-col gap-1">
-                <p class="text-xs text-gray-400 font-medium">#${issue.issue_id} by <span class="text-gray-600">${issue.author}</span></p>
-                <p class="text-xs text-gray-400">${issue.date}</p>
+
+            <div class="mt-4 pt-4 border-t border-gray-50">
+                <p class="text-xs text-gray-400 font-medium">#${issue.issue_id} &nbsp; by ${issue.author}</p>
+                <p class="text-xs text-gray-400 mt-1">${issue.date}</p>
             </div>
         `;
         container.appendChild(card);
     });
 };
 
-// Updated toggleTab function with filtering logic
+// 5. Tab toggle function
 function toggleTab(clickedBtn, statusType) {
-    // 1. Button style change logic
     const allButtons = document.querySelectorAll('.tab-btn');
     allButtons.forEach(btn => {
         btn.classList.remove('bg-[#4a00ff]', 'text-white');
@@ -141,7 +120,6 @@ function toggleTab(clickedBtn, statusType) {
     clickedBtn.classList.add('bg-[#4a00ff]', 'text-white');
     clickedBtn.classList.remove('text-gray-500');
 
-    // 2. Filter logic: statusType 'all' hole shob, naile filter kora data show hobe
     if (statusType === 'all') {
         displayIssues(allIssuesData);
     } else {
