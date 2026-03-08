@@ -32,7 +32,10 @@
                 <span class="absolute left-3 top-2.5 text-gray-400">
                     <img src="./assets/MagnifyingGlass.png" alt="" class="w-5">
                 </span>
-                <input type="text" placeholder="Search issues..." class="pl-10 pr-4 py-2 border rounded-md w-full focus:outline-none focus:ring-1 focus:ring-purple-500">
+                <!-- <input type="text" placeholder="Search issues..." class="pl-10 pr-4 py-2 border rounded-md w-full focus:outline-none focus:ring-1 focus:ring-purple-500"> -->
+                 <input id="searchInput" onkeyup="handleSearch()" type="text" placeholder="Search issues..." 
+       class="pl-12 pr-4 py-3 border border-gray-200 rounded-xl w-full focus:outline-none">
+
             </div>
             
             <!-- New Issue Button -->
@@ -48,10 +51,10 @@
             <button onclick="toggleTab(this,'all')" class="tab-btn flex-1 sm:flex-none px-6 md:px-8 py-2.5 rounded-md text-sm font-bold bg-[#4a00ff] text-white transition-all whitespace-nowrap">
                 All
             </button>
-            <button onclick="toggleTab(this,'open')" class="tab-btn flex-1 sm:flex-none px-6 md:px-8 py-2.5 rounded-md text-sm font-bold text-gray-500 hover:bg-gray-100 transition-all whitespace-nowrap">
+            <button onclick="toggleTab(this,'open')" class="tab-btn flex-1 sm:flex-none px-6 md:px-8 py-2.5 rounded-md text-sm font-bold text-gray-500  transition-all whitespace-nowrap">
                 Open
             </button>
-            <button onclick="toggleTab(this,'closed')" class="tab-btn flex-1 sm:flex-none px-6 md:px-8 py-2.5 rounded-md text-sm font-bold text-gray-500 hover:bg-gray-100 transition-all whitespace-nowrap">
+            <button onclick="toggleTab(this,'closed')" class="tab-btn flex-1 sm:flex-none px-6 md:px-8 py-2.5 rounded-md text-sm font-bold text-gray-500  transition-all whitespace-nowrap">
                 Closed
             </button>
         </div>
@@ -108,9 +111,9 @@
                 </form>
             </div>
         </div>
-        <form method="dialog" class="modal-backdrop">
+        <!-- <form method="dialog" class="modal-backdrop">
             <button>close</button>
-        </form>
+        </form> -->
     </dialog>
 
     <script src="main.js"></script>

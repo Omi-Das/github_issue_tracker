@@ -23,7 +23,7 @@ const showIssueDetails = async (id) => {
     modalContent.innerHTML = `<div class="flex justify-center py-10"><span class="loading loading-spinner loading-lg text-[#4a00ff]"></span></div>`;
 
     // fetch URL-e add kora hoyeche
-    const res = await fetch(`https://phi-lab-server.vercel.app{id}`);
+    const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issue/`);
     const result = await res.json();
     const issue = result.data;
 
@@ -48,6 +48,7 @@ const showIssueDetails = async (id) => {
         </div>
     `;
 };
+
 
 // 3. API theke main list load kora
 const loadIssues = async () => {
@@ -129,3 +130,50 @@ function toggleTab(clickedBtn, statusType) {
 }
 
 loadIssues();
+// Search Functionality
+// const handleSearch = () => {
+//     const searchText = document.getElementById('searchInput').value;
+
+//     // search box khali thakle sob data dekhabe
+//     if (!searchText) {
+//         displayIssues(allIssuesData);
+//         return;
+//     }
+
+//     // API call
+//     fetch(`https://phi-lab-server.vercel.app{searchText}`)
+//         .then(res => res.json())
+//         .then(result => {
+//             // card ghula update kora
+//             displayIssues(result.data || []);
+//         });
+// };
+//  handleSearch();
+
+// সার্চ ফাংশনালিটি
+const handleSearch = async () => {
+    const searchText = document.getElementById('searchInput').value;
+
+    // যদি সার্চ বক্স খালি থাকে, তবে সব ডাটা আবার দেখাবে
+    if (!searchText) {
+        displayIssues(allIssuesData);
+        updateCounts(allIssuesData);
+        return;
+    }
+
+    //type korar somoi loading spinner dekhano
+    const container = document.getElementById('issues-container');
+    container.innerHTML = `<div class="col-span-full flex justify-center py-10"><span class="loading loading-spinner loading-lg text-[#4a00ff]"></span></div>`;
+
+    try {
+    //API endPoint
+        const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}` );
+        const result = await res.json();
+        
+        // search result card e dekhano (result.data check kora hocche)
+        displayIssues(result.data || []);
+    } catch (err) {
+        console.error("Search failed:", err);
+        container.innerHTML = `<p class="col-span-full text-center text-red-500 font-bold py-10">Search failed. Please check your internet or API!</p>`;
+    }
+};
