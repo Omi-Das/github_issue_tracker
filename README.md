@@ -32,4 +32,26 @@ Ans: Difference between var, let and const:
        const newNumbers = [...numbers, 4, 5];
 
        Result : [1,2,3,4,5];
+
+       --------------------
+
+3.What is the difference between map(), filter(), and forEach()? 
+
+  Ans:
+    difference between map(), filter(), and forEach():
+
+    i) map() -> Creates a new array by transforming each element
+    ii) filters() -> Create a new array with elements that pass a condition
+    iii) forEach() -> Runs a function for each element but does not return new  array
+
+    Example : 
+    const numbers = [1,2,3,4];
+
+    numbers.map(n => n*2); //[2,4,6,8]
+    numbers.filter(n => n>2); // [3,4]
+    numbers.forEach(n => console.log(n)); //prints numbers
+
+       -----------------------
+
+4.
        
