@@ -66,5 +66,23 @@ Ans: Difference between var, let and const:
        It is commonly used in Modern Javascript and callback function .
 
        -----------------------
-       
+
+5.What are template literals? 
+
+  Ans:
+    
+    Template literals are a way to write strings using backticks().
+    
+    Dynamic way and also allowing embedding variables inside strings easily.
+
+    Example :
+
+    const name = 'Omi' ;
+    const message = `Hello, my name is ${name}`;
+
+    console.log(message);
+
+    Output:
+
+    hello, my name is Omi
        
