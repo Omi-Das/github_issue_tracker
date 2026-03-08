@@ -17,3 +17,19 @@ Ans: Difference between var, let and const:
           var a = 10 ;
           let b = 20 ;
           const c = 30 ;
+
+
+          -----------------------
+
+ 2.What is the spread operator (...)?
+
+   Ans:
+
+   The spread operator is used to expand elements of an array or object into individual items.
+
+   Example :
+     const numbers = [1,2,3];
+       const newNumbers = [...numbers, 4, 5];
+
+       Result : [1,2,3,4,5];
+       
