@@ -426,7 +426,7 @@ const showIssueDetails = async (id) => {
         // data dynamically set (undefined prevent e default value)
         const displayTitle = issue.title || "No Title Available";
         const displayAuthor = issue.author || "Unknown Author";
-        const displayDate = issue.date || "Unknown Date";
+        const displayDate = issue.createdAt || "Unknown Date";
         const displayDesc = issue.description || "No description provided.";
         const displayPriority = issue.priority || "NORMAL";
         const displayStatus = issue.status === 'open' ? 'Opened' : 'Closed';
@@ -496,20 +496,39 @@ const displayIssues = (issues) => {
             <h3 class="font-bold text-gray-800 text-lg leading-tight mb-2">${issue.title}</h3>
             <p class="text-sm text-gray-400 leading-relaxed mb-4 line-clamp-2">${issue.description}</p>
 
-            <!-- Labels: BUG & HELP WANTED (Fixed Colors) -->
-            <div class="flex gap-2 mb-6">
-                <span class="flex items-center gap-1 px-3 py-1 rounded-full bg-red-50 text-red-400 text-[10px] font-bold border border-red-100">
-                    <svg xmlns="http://www.w3.org" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6L6 18M6 6l12 12"></path></svg> BUG
-                </span>
-                <span class="flex items-center gap-1 px-3 py-1 rounded-full bg-orange-50 text-orange-400 text-[10px] font-bold border border-orange-100">
-                    <svg xmlns="http://www.w3.org" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path></svg> HELP WANTED
-                </span>
-            </div>
+        
+<div class="flex flex-wrap gap-2 mb-6">
+    ${(issue.labels || []).map(label => {
+        const isBug = label.toLowerCase() === 'bug';
+        
+        const colors = isBug 
+            ? "bg-red-50 text-red-400 border-red-100" 
+            : "bg-orange-50 text-orange-400 border-orange-100";
 
-            <!-- Footer: ID, Author & Date -->
+        const icon = isBug
+            ? '<path d="M18 6L6 18M6 6l12 12"></path>'
+            : '<circle cx="12" cy="12" r="10"></circle><path d="M12 16v-4M12 8h.01"></path>';
+
+        return `
+            <span class="flex items-center gap-1 px-3 py-1 rounded-full ${colors} text-[10px] font-bold border">
+                <svg xmlns="http://www.w3.org" width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                    ${icon}
+                </svg> 
+                ${label.toUpperCase()}
+            </span>
+        `;
+    }).join('')}
+</div>
+
+
+
+            
             <div class="mt-4 pt-4 border-t border-gray-50">
                 <p class="text-xs text-gray-400 font-medium">#${uniqueId} &nbsp; by ${issue.author}</p>
-                <p class="text-xs text-gray-400 mt-1">${issue.date || 'No Date'}</p>
+<p class="text-xs text-gray-400 mt-1">
+    ${issue.createdAt ? new Date(issue.createdAt).toLocaleDateString() : 'No Date'}
+</p>
+
             </div>
         `;
         container.appendChild(card);
