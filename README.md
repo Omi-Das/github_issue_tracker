@@ -53,5 +53,18 @@ Ans: Difference between var, let and const:
 
        -----------------------
 
-4.
+4.What is an arrow function?
+ 
+ Ans:
+   
+   An arrow function is a shorter way to write a function in JavaScript
+
+   Example :
+       
+       const add = (a,b) => a + b;
+
+       It is commonly used in Modern Javascript and callback function .
+
+       -----------------------
+       
        
