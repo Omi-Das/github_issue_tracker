@@ -82,16 +82,16 @@ const showIssueDetails = async (id) => {
             iconSrc = "./assets/vector (1).png";
         } else if (lowerLabel === 'enhancement') {
             colors = "bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]";
-            iconSrc = "./assets/vector (2).png";
+            iconSrc = "./assets/Vector (2).png";
         } 
         else if (lowerLabel === 'good first issue'){
             colors = "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]"
-            iconSrc = "./assets/vector (1).png";
+            iconSrc = "./assets/Vector (1).png";
         }
 
         else {
             colors = "bg-gray-50 text-gray-400 border-gray-100";
-            iconSrc = "./assets/vector (1).png";
+            iconSrc = "./assets/Vector (1).png";
         }
 
         return `
@@ -175,19 +175,19 @@ const displayIssues = (issues) => {
         } else if (lowerLabel === 'documentation' || lowerLabel === 'help wanted') {
            
             colors = "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]"; 
-            iconSrc = "../assets/vector (1).png";
+            iconSrc = "./assets/Vector (1).png";
         } else if (lowerLabel === 'enhancement') {
             colors = "bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]";
-            iconSrc = "../assets/vector (2).png";
+            iconSrc = "./assets/Vector (2).png";
         } 
         else if (lowerLabel === 'good first issue'){
             colors = "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]"
-            iconSrc = "../assets/vector (1).png";
+            iconSrc = "../assets/Vector (1).png";
         }
 
         else {
             colors = "bg-gray-50 text-gray-400 border-gray-100";
-            iconSrc = "../assets/vector (1).png";
+            iconSrc = "../assets/Vector (1).png";
         }
 
         return `
