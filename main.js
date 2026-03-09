@@ -268,7 +268,7 @@ const handleSearch = async () => {
    const allButtons = document.querySelectorAll('.tab-btn');
     allButtons.forEach(btn => {
         btn.classList.remove('bg-[#4a00ff]', 'text-white'); 
-        btn.classList.add('text-gray-500'); 
+        btn.classList.add('text-black-500', ); 
     });
     const container = document.getElementById('issues-container');
     container.innerHTML = `<div class="col-span-full flex justify-center py-10"><span class="loading loading-spinner loading-lg text-[#4a00ff]"></span></div>`;
