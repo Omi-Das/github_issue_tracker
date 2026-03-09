@@ -37,7 +37,6 @@ const showIssueDetails = async (id) => {
         console.warn("API fetch failed, checking local data...");
     }
 
-    // API-te na pele local array (allIssuesData) theke khuja
     if (!issue && typeof allIssuesData !== 'undefined') {
         issue = allIssuesData.find(item => 
             String(item.issue_id) === String(id) || 
@@ -197,7 +196,6 @@ const displayIssues = (issues) => {
     });
 };
 
-// API theke list load kora
 const loadIssues = async () => {
     showLoading();
     try {
@@ -228,9 +226,8 @@ function updateCounts(issues) {
 
 let currentTab = 'all'; 
 
-// Tab toggle function 
 function toggleTab(clickedBtn, statusType) {
-    currentTab = statusType; // বর্তমানে কোন ট্যাবে আছেন তা সেভ করা হলো
+    currentTab = statusType; 
 
     const allButtons = document.querySelectorAll('.tab-btn');
     allButtons.forEach(btn => {
@@ -250,31 +247,31 @@ function toggleTab(clickedBtn, statusType) {
         } else {
             const filtered = allIssuesData.filter(issue => issue.status === statusType);
             displayIssues(filtered);
-            updateCounts(filtered); // nirdistto tab count updated 
+            updateCounts(filtered); 
         }
         hideLoading();
     }, 200); 
 }
 
-//handleSearch function
+
 const handleSearch = async () => {
     const searchText = document.getElementById('searchInput').value;
 
-    // jodi searchBox khali thake, tobe vortoman tab onujayi data firiye ana
     if (!searchText) {
         const resetData = currentTab === 'all' 
             ? allIssuesData 
             : allIssuesData.filter(issue => issue.status === currentTab);
         displayIssues(resetData);
-        updateCounts(resetData);
         return;
     }
 
+   const allButtons = document.querySelectorAll('.tab-btn');
+    allButtons.forEach(btn => {
+        btn.classList.remove('bg-[#4a00ff]', 'text-white'); 
+        btn.classList.add('text-gray-500'); 
+    });
     const container = document.getElementById('issues-container');
-    container.innerHTML = `
-        <div class="col-span-full flex justify-center py-10">
-            <span class="loading loading-spinner loading-lg text-[#4a00ff]"></span>
-        </div>`;
+    container.innerHTML = `<div class="col-span-full flex justify-center py-10"><span class="loading loading-spinner loading-lg text-[#4a00ff]"></span></div>`;
 
     try {
         const res = await fetch(`https://phi-lab-server.vercel.app/api/v1/lab/issues/search?q=${searchText}`);
@@ -282,12 +279,9 @@ const handleSearch = async () => {
         
         let searchResults = result.data || [];
 
-        //  Filtering: jodi open & closed tab e thaken, tobe shudu oi status er data dekhabe
-        if (currentTab !== 'all') {
-            searchResults = searchResults.filter(issue => issue.status === currentTab);
-        }
-
         displayIssues(searchResults);
+        
+        
         updateCounts(searchResults); 
 
     } catch (err) {
