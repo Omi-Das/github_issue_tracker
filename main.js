@@ -149,7 +149,6 @@ const displayIssues = (issues) => {
                 </span>
             </div>
 
-            <!-- Title & Description -->
             <h3 class="font-bold text-gray-800 text-lg leading-tight mb-2">${issue.title}</h3>
             <p class="text-sm text-gray-400 leading-relaxed mb-4 line-clamp-2">${issue.description}</p>
 
@@ -280,7 +279,6 @@ const handleSearch = async () => {
         let searchResults = result.data || [];
 
         displayIssues(searchResults);
-        
         
         updateCounts(searchResults); 
 
