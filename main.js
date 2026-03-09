@@ -72,24 +72,16 @@ const showIssueDetails = async (id) => {
         let colors = "";
         let iconSrc = "";
 
-      
         if (lowerLabel === 'bug') {
             colors = "bg-red-50 text-red-400 border-red-100";
             iconSrc = "./assets/BugDroid.png";
-        } else if (lowerLabel === 'documentation' || lowerLabel === 'help wanted') {
-           
+        } else if (lowerLabel === 'documentation' || lowerLabel === 'help wanted' || lowerLabel === 'good first issue') {
             colors = "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]"; 
-            iconSrc = "./assets/vector (1).png";
+            iconSrc = "./assets/Vector (1).png"; 
         } else if (lowerLabel === 'enhancement') {
             colors = "bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]";
             iconSrc = "./assets/Vector (2).png";
-        } 
-        else if (lowerLabel === 'good first issue'){
-            colors = "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]"
-            iconSrc = "./assets/Vector (1).png";
-        }
-
-        else {
+        } else {
             colors = "bg-gray-50 text-gray-400 border-gray-100";
             iconSrc = "./assets/Vector (1).png";
         }
@@ -102,6 +94,7 @@ const showIssueDetails = async (id) => {
         `;
     }).join('')}
 </div>
+
 
 
             <div class="bg-gray-50 p-6 md:p-8 rounded-2xl mb-10 border border-gray-100">
@@ -168,26 +161,18 @@ const displayIssues = (issues) => {
         let colors = "";
         let iconSrc = "";
 
-      
         if (lowerLabel === 'bug') {
             colors = "bg-red-50 text-red-400 border-red-100";
             iconSrc = "./assets/BugDroid.png";
-        } else if (lowerLabel === 'documentation' || lowerLabel === 'help wanted') {
-           
+        } else if (lowerLabel === 'documentation' || lowerLabel === 'help wanted' || lowerLabel === 'good first issue') {
             colors = "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]"; 
-            iconSrc = "./assets/Vector (1).png";
+            iconSrc = "./assets/Vector (1).png"; 
         } else if (lowerLabel === 'enhancement') {
             colors = "bg-[#DCFCE7] text-[#15803D] border-[#BBF7D0]";
             iconSrc = "./assets/Vector (2).png";
-        } 
-        else if (lowerLabel === 'good first issue'){
-            colors = "bg-[#FEF3C7] text-[#D97706] border-[#FDE68A]"
-            iconSrc = "../assets/Vector (1).png";
-        }
-
-        else {
+        } else {
             colors = "bg-gray-50 text-gray-400 border-gray-100";
-            iconSrc = "../assets/Vector (1).png";
+            iconSrc = "./assets/Vector (1).png";
         }
 
         return `
@@ -198,6 +183,7 @@ const displayIssues = (issues) => {
         `;
     }).join('')}
 </div>
+
      
             <div class="mt-4 pt-4 border-t border-gray-50">
                 <p class="text-xs text-gray-400 font-medium">#${uniqueId} &nbsp; by ${issue.author}</p>
