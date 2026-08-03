@@ -19,6 +19,6 @@ loginBtn.addEventListener("click", function(event) {
        
         window.location.href = "main.html"; 
     } else {
-        alert("Vul Number athoba Pin diyechen. Abar chesta korun!");
+        alert("Another Try!");
     }
 });
